@@ -1,0 +1,45 @@
+<?php
+
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
+use Illuminate\Support\Facades\Route;
+
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/',[ServiceController::class,'homepage'])->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+});
+
+Route::middleware(RoleMiddleware::class)->group(function () {
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/categorydashboard', 'index')->name('categorydashboard.show');
+        Route::get('/addcategoryform', 'showaddform')->name('categorydashboard.showaddform');
+        Route::post('/addcategory', 'createcategory')->name('categorydashboard.addcategory');
+        Route::get('/categoryupdate/{id}','showupdateform')->name('categorydashboard.showupdateform');
+        Route::put('/updatecategory/{id}', 'udpatecategory')->name('categorydashboard.update');
+        Route::get('/categorydelete/{id}','confirmdelete')->name('categorydashboard.confirmdelete');
+        Route::delete('deletecategory/{id}','deletecategory')->name('categorydashboard.deletecategory');
+    });
+
+    Route::controller(ServiceController::class)->group(function(){
+        Route::get('/servicesdashboard','index')->name('services.show');
+        Route::get('/addserviceform','showaddform')->name('services.showaddform');
+        Route::post('/addservice','addservice')->name('services.addservice');
+        Route::get('/serviceupdate/{id}','showupdateform');
+        Route::put('/updateservice/{id}','updateservice');
+        Route::get('/servicedelete/{id}','showconfirmdelete');
+        Route::delete('/deleteservice/{id}','deleteservice');
+    });
+
+});
+
+require __DIR__ . '/auth.php';
