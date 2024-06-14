@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::latest()->paginate(5);
+        $categories = Category::latest()->paginate(4);
         return view('CategoryDashboard.categorydashboard')->with('categories',$categories);
     }
     public function showaddform(){

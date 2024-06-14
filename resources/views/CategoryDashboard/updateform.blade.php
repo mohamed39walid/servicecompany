@@ -6,43 +6,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Update Category</title>
 </head>
-
-<body class="bg-light text-dark">
+<body class="bg-gradient-to-r from-slate-50 to-slate-100">
     @include('layouts.navigation')
-    <div class="container">
-        <h1 class="text-center m-3" style="font-size: 50px">Update Category</h1>
-        <form class="bg-light text-dark w-50 m-auto" action="/updatecategory/{{$id}}" method="post">
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl text-center mb-6">Update Category</h1>
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-md" action="/updatecategory/{{$id}}" method="post">
             @csrf
-            <div class="mb-3">
-                <label class="form-label">Category Name</label>
-                <input type="text" class="form-control rounded" name="name" value={{ old('categoryname',$category->name)}}>
-            </div>
-            @error('name')
-            <span class="text-danger">{{ $message }}</span><br><br>
-            @enderror
-            <div class="mb-3">
-                <label class="form-label">Category Description</label>
-                <input type="text" class="form-control rounded" name="description" value="{{ old('categorydescription', $category->description) }}">
-            </div>
-            @error('description')
-            <span class="text-danger ">{{ $message }}</span><br><br>
-            @enderror
-            <div class="mb-3">
-                <label class="form-label">Services</label>
-                <input type="text" class="form-control rounded" name="services" value="{{ old('services', $category->services) }}">
-            </div>
-            @error('services')
-            <span class="text-danger ">{{ $message }}</span><br><br>
-            @enderror
-            <input class="btn btn-primary" value="Update Category" type="submit">
-            <a class="btn btn-success" href="/categorydashboard">Back</a>
             @method('PUT')
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Category Name</label>
+                <input id="name" name="name" type="text" value="{{ old('name', $category->name) }}" placeholder="Category Name" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('name')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Category Description</label>
+                <input id="description" name="description" type="text" value="{{ old('description', $category->description) }}" placeholder="Category Description" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('description')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="services">Services</label>
+                <input id="services" name="services" type="text" value="{{ old('services', $category->services) }}" placeholder="Services" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('services')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Category</button>
+                <a href="/categorydashboard" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Back</a>
+            </div>
         </form>
-
     </div>
 </body>
 </html>

@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class ServiceController extends Controller
 {
     public function homepage(){
-        $services = Service::latest()->paginate(6);
+        $services = Service::latest()->paginate(4);
         return view('welcome')->with('services',$services);
     }
     public function index(){
-        $services = Service::latest()->paginate(5);
+        $services = Service::latest()->paginate(4);
         return view('ServicesDashboard.servicesdashboard')->with('services',$services);
     }
     public function showaddform(){

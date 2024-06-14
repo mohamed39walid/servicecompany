@@ -22,11 +22,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware(RoleMiddleware::class)->group(function () {
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/categorydashboard', 'index')->name('categorydashboard.show');
-        Route::get('/addcategoryform', 'showaddform')->name('categorydashboard.showaddform');
+        Route::get('/addcategory', 'showaddform')->name('categorydashboard.showaddform');
         Route::post('/addcategory', 'createcategory')->name('categorydashboard.addcategory');
-        Route::get('/categoryupdate/{id}','showupdateform')->name('categorydashboard.showupdateform');
+        Route::get('/updatecategory/{id}','showupdateform')->name('categorydashboard.showupdateform');
         Route::put('/updatecategory/{id}', 'udpatecategory')->name('categorydashboard.update');
-        Route::get('/categorydelete/{id}','confirmdelete')->name('categorydashboard.confirmdelete');
+        Route::get('/deletecategory/{id}','confirmdelete')->name('categorydashboard.confirmdelete');
         Route::delete('deletecategory/{id}','deletecategory')->name('categorydashboard.deletecategory');
     });
 
@@ -34,7 +34,7 @@ Route::middleware(RoleMiddleware::class)->group(function () {
         Route::get('/servicesdashboard','index')->name('services.show');
         Route::get('/addserviceform','showaddform')->name('services.showaddform');
         Route::post('/addservice','addservice')->name('services.addservice');
-        Route::get('/serviceupdate/{id}','showupdateform');
+        Route::get('/updateservice/{id}','showupdateform');
         Route::put('/updateservice/{id}','updateservice');
         Route::get('/servicedelete/{id}','showconfirmdelete');
         Route::delete('/deleteservice/{id}','deleteservice');
@@ -42,4 +42,6 @@ Route::middleware(RoleMiddleware::class)->group(function () {
 
 });
 
+
+Route::post('/addtocart/{id}',[]);
 require __DIR__ . '/auth.php';

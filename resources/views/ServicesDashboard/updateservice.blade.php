@@ -6,41 +6,45 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Update service</title>
+    <title>Update Service</title>
 </head>
-<body class="bg-light text-dark">
+<body class="bg-gray-100">
     @include('layouts.navigation')
-    <div class="container">
-        <h1 class="text-center m-3" style="font-size: 50px">Update service</h1>
-        <form class="bg-light text-dark w-50 m-auto" action="/updateservice/{{$id}}" method="post">
+    <div class="container mx-auto p-4">
+        <h1 class="text-center text-3xl font-bold m-4">Update Service</h1>
+        <form class="bg-white shadow-md rounded-lg w-full max-w-md mx-auto p-6" action="/updateservice/{{$id}}" method="post">
             @csrf
-            <div class="mb-3">
-                <label class="form-label">service Name</label>
-                <input type="text" class="form-control rounded" name="service_name" value={{ old('servicename',$service->service_name)}}>
-            </div>
-            @error('service_name')
-            <span class="text-danger">{{ $message }}</span><br><br>
-            @enderror
-            <div class="mb-3">
-                <label class="form-label">service Description</label>
-                <textarea type="text" class="form-control rounded" name="service_description">{{ old('servicedescription', $service->service_description) }}</textarea>
-            </div>
-            @error('service_description')
-            <span class="text-danger ">{{ $message }}</span><br><br>
-            @enderror
-            <label class="form-label">Service Category</label>
-            <select class="text-dark form-select rounded border-dark mb-3" name="category_id">
-            @foreach ($categories as $category)
-                <option class="form-control" value={{$category->id}}>{{$category->name}}</option>            
-            @endforeach
-        </select>
-            <input class="btn btn-primary" value="Update service" type="submit">
-            <a class="btn btn-success" href="/servicesdashboard">Back</a>
             @method('PUT')
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Service Name</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="service_name" value="{{ old('service_name', $service->service_name) }}">
+                @error('service_name')
+                <span class="text-red-500 text-xs italic">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Service Description</label>
+                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="service_description">{{ old('service_description', $service->service_description) }}</textarea>
+                @error('service_description')
+                <span class="text-red-500 text-xs italic">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Service Category</label>
+                <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="category_id">
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" {{ old('category_id', $service->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-between">
+                <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="Update Service" type="submit">
+                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/servicesdashboard">Back</a>
+            </div>
         </form>
-
     </div>
 </body>
 </html>

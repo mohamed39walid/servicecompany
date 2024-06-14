@@ -6,39 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Add Category</title>
 </head>
-<body class="bg-light">
-    <div class="container">
-        @include('layouts.navigation')
-        <h1 class="text-center m-4">Add Category</h1>
-        <form class="bg-light w-50 m-auto" action="/addcategory" method="post">
+<body class="bg-gradient-to-r from-slate-50 to-slate-100">
+    @include('layouts.navigation')
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl text-center mb-6">Add Category</h1>
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-md" action="/addcategory" method="post">
             @csrf
-            <div class="mb-3">
-                <label class="form-label">Category Name</label>
-                <input type="text" class="form-control rounded" name="name">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Category Name</label>
+                <input id="name" name="name" type="text" placeholder="Category Name" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('name')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
-            @error('name')
-            <span class="text-danger">{{ $message }}</span><br><br>
-            @enderror
-            <div class="mb-3">
-                <label class="form-label">Category Description</label>
-                <input type="text" class="form-control rounded" name="description">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Category Description</label>
+                <input id="description" name="description" type="text" placeholder="Category Description" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('description')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
-            @error('description')
-            <span class="text-danger ">{{ $message }}</span><br><br>
-            @enderror
-            <div class="mb-3">
-                <label class="form-label">Services</label>
-                <input type="text" class="form-control rounded" name="services">
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="services">Services</label>
+                <input id="services" name="services" type="text" placeholder="Services" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('services')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
-            @error('services')
-            <span class="text-danger ">{{ $message }}</span><br><br>
-            @enderror
-            <input class="btn btn-primary" value="Add Category" type="submit">
-            <a class="btn btn-success" href="/categorydashboard">Back</a>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Category</button>
+                <a href="/categorydashboard" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Back</a>
+            </div>
         </form>
     </div>
 </body>
