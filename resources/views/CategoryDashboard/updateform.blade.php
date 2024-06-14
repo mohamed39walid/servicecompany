@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Update Category</title>
 </head>
-<body class="bg-gradient-to-r from-slate-50 to-slate-100">
+<body class="   ">
     @include('layouts.navigation')
     <div class="container mx-auto p-6">
         <h1 class="text-4xl text-center mb-6">Update Category</h1>
