@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="//unpkg.com/alpinejs" defer></script> <!-- Add Alpine.js for dropdown functionality -->
+    <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-PH8I3iGkW9TKC9a5+GIPjY7GkZ2T9wEv8WtMwJ6W5x4AfjNbt17C9AjqUZJjlB3KzPz9+6q5imwYXOW9kt47GQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Navigation</title>
@@ -47,17 +47,19 @@
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-4">
                     @auth
-                    <div x-data="{ open: false }" class="relative flex items-center">
+                    @if(auth()->user() && auth()->user()->role == 'user')
+                    <div class="relative flex items-center">
                         <!-- Cart Icon -->
                         <a href="/cart" class="text-white">
-                            <img class="w-9 mr-1" src="{{ asset('cart.png') }}" alt="Cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                            </svg>
                         </a>
-                        <!-- Favorite Icon -->
-                        <a href="#" class="text-white">
-                            <img class="w-8" src="{{ asset('fav.png') }}" alt="Favorite">
-                        </a>
-                        <!-- User Dropdown -->
-                        <button @click="open = !open" class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-white">
+                    </div>
+                    @endif
+                    <!-- User Dropdown -->
+                    <div x-data="{ dropdownOpen: false }" class="relative">
+                        <button @click="dropdownOpen = !dropdownOpen" class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-white focus:outline-none focus:ring focus:ring-gray-300">
                             <div>{{ Auth::user()->name }}</div>
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -66,7 +68,7 @@
                             </div>
                         </button>
                         <!-- Dropdown Content -->
-                        <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white text-gray-700 z-20">
+                        <div x-show="dropdownOpen" @click.away="dropdownOpen = false" class="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white text-gray-700 z-20" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95">
                             <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-sm">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -74,8 +76,7 @@
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-dropdown-link :href="route('logout')" class="block px-4 py-2 text-sm"
-                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                <x-dropdown-link :href="route('logout')" class="block px-4 py-2 text-sm" onclick="event.preventDefault(); this.closest('form').submit();">
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
@@ -131,8 +132,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <x-responsive-nav-link :href="route('logout')" class="text-white"
-                            onclick="event.preventDefault();
+                        <x-responsive-nav-link :href="route('logout')" class="text-white" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                             {{ __('Log Out') }}
                         </x-responsive-nav-link>

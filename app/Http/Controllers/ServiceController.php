@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
-use App\Models\Favourite;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +13,7 @@ class ServiceController extends Controller
     public function homepage(){
         $services = Service::latest()->paginate(4);
         $service_id = Cart::select('id','service_id')->where('user_id',Auth::id())->get();
-        $fav_service_id = Favourite::select('id','service_id')->where('user_id',Auth::id())->get();
-        return view('welcome')->with('services',$services)->with('service_id',$service_id)->with('fav_service_id',$fav_service_id);
+        return view('welcome')->with('services',$services)->with('service_id',$service_id);
     }
     public function index(){
         $services = Service::latest()->paginate(4);
