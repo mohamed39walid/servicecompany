@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,10 @@ Route::controller(CartController::class)->group(function(){
 
 
 
+
+Route::controller(FavouriteController::class)->group(function(){
+    Route::get('/favourites','index');
+    Route::post("/addtofav/{id}",'store');
+    Route::delete("/deletefromfav/{id}",'destroy');
+    Route::delete("/deletefromfavpage/{id}",'deletefrompage');});
 require __DIR__ . '/auth.php';
